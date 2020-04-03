@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Web crawler",
   "main": "app.js",
+  "bin": {
+    "anime_down": "./bin.js"
+  },
   "scripts": {
     "start": "sucrase-node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +19,8 @@
   ],
   "author": "TecladistaProd",
   "license": "ISC",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "axios": "^0.19.2",
     "inquirer": "^7.1.0",
     "jsdom": "^16.2.2",

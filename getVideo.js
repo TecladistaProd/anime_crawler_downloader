@@ -13,8 +13,10 @@ async function getVideo(url, oldURL, name) {
       .innerHTML.replace("var jw = ", "")
   );
 
-  const file = fs.createWriteStream(`${name}.mp4`);
-  const request = https.get(
+  const file = fs.createWriteStream(
+    `${name.replace(/[/\\?%*:|"<>]/g, "-")}.mp4`
+  );
+  https.get(
     dt.file,
     {
       headers: {
@@ -23,6 +25,7 @@ async function getVideo(url, oldURL, name) {
     },
     function(response) {
       response.pipe(file);
+      response.on("end", () => console.log(`${file.path} download finished`));
     }
   );
 }
