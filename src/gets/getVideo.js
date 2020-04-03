@@ -1,10 +1,13 @@
 import axios from "axios";
 import { JSDOM } from "jsdom";
-import fs from "fs";
 import https from "https";
 
-async function getVideo(url, oldURL, name) {
-  let { data } = await axios.get(url);
+import getEpisodio from "./getEpisodio";
+
+async function getVideo(urlBase, oldURL, res) {
+  let buff = new Buffer(urlBase, "base64");
+  const url = buff.toString("ascii");
+  let { data } = await axios.get(await getEpisodio(url));
   let { document } = new JSDOM(data).window;
 
   let dt = JSON.parse(
@@ -13,8 +16,9 @@ async function getVideo(url, oldURL, name) {
       .innerHTML.replace("var jw = ", "")
   );
 
-  const file = fs.createWriteStream(`${name}.mp4`);
-  const request = https.get(
+  // return dt.file;
+
+  https.get(
     dt.file,
     {
       headers: {
@@ -22,7 +26,7 @@ async function getVideo(url, oldURL, name) {
       }
     },
     function(response) {
-      response.pipe(file);
+      response.pipe(res);
     }
   );
 }
