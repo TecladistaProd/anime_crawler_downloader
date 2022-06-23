@@ -19,7 +19,7 @@
   "devDependencies": {
     "axios": "^0.19.2",
     "inquirer": "^7.1.0",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.5.0",
     "sucrase": "^3.13.0"
   }
 }
